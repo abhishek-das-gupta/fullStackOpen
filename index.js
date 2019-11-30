@@ -3,7 +3,10 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const cors = require('cors')
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3c07055... Intial deploy to heroku
 morgan.token('body', (req,res) => req.method!=='GET' ? JSON.stringify(req.body) : " ")
 
 const app = express()
@@ -11,7 +14,10 @@ const app = express()
 app.use(bodyParser.json())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 app.use(cors())
+<<<<<<< HEAD
 app.use(express.static('build'))
+=======
+>>>>>>> 3c07055... Intial deploy to heroku
 
 let persons = [
     {
@@ -35,9 +41,13 @@ let persons = [
         "id": 75
       }
 ]
+<<<<<<< HEAD
 app.get('/', (req,res) => {
   res.send(`<div><h1>Hello World!</h1></div>`)
 })
+=======
+
+>>>>>>> 3c07055... Intial deploy to heroku
 app.get('/api/persons', (req,res) => {
     res.json(persons)
 })
