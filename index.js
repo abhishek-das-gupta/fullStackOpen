@@ -1,23 +1,21 @@
+require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const cors = require('cors')
 
-<<<<<<< HEAD
+const Phonebook = require('./models/phonebook')
 
-=======
->>>>>>> 3c07055... Intial deploy to heroku
-morgan.token('body', (req,res) => req.method!=='GET' ? JSON.stringify(req.body) : " ")
 
 const app = express()
+morgan.token('body', (req,res) => req.method!=='GET' ? JSON.stringify(req.body) : " ")
+
+
 
 app.use(bodyParser.json())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 app.use(cors())
-<<<<<<< HEAD
 app.use(express.static('build'))
-=======
->>>>>>> 3c07055... Intial deploy to heroku
 
 let persons = [
     {
@@ -41,15 +39,14 @@ let persons = [
         "id": 75
       }
 ]
-<<<<<<< HEAD
 app.get('/', (req,res) => {
   res.send(`<div><h1>Hello World!</h1></div>`)
 })
-=======
-
->>>>>>> 3c07055... Intial deploy to heroku
 app.get('/api/persons', (req,res) => {
-    res.json(persons)
+  Phonebook.find({})
+    .then(persons =>{
+      res.json(persons.map(person => person.toJSON()))
+    })
 })
 
 app.get('/info', (req,res) => {
@@ -97,7 +94,7 @@ app.post('/api/persons',(req,res) => {
 })
 
 
-const PORT = process.env.PORT || 3004
+const PORT = process.env.PORT
 app.listen(PORT, ()=>{
     console.log(`Server running on ${PORT}`)
 })
