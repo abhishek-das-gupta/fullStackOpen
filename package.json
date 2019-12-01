@@ -10,6 +10,7 @@
     "push": "git push origin master",
     "build:ui": "rm -r build && cd /home/abhishek/FullStack/part2/thephonebook/ && npm run build --prod && cp -r build /home/abhishek/FullStack/part3/phonebookBackend",
     "deploy": "git push heroku master",
+    "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -23,6 +24,7 @@
     "morgan": "^1.9.1"
   },
   "devDependencies": {
+    "eslint": "^6.7.2",
     "nodemon": "^2.0.1"
   }
 }
