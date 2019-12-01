@@ -69,6 +69,22 @@ app.delete('/api/persons/:id', (req,res,next) => {
     .catch(error => next(erro))
 })
 
+app.put('/api/persons/:id', (req,res,next) =>{
+  const body = req.body
+
+  const person = {
+    name: body.name,
+    number: body.number,
+  }
+  Phonebook.findByIdAndUpdate(req.params.id, person, {new: true})
+    .then(updatedPerson => {
+      res.json(updatedPerson.toJSON())
+    })
+    .catch(error => next(error))
+
+})
+
+
 app.post('/api/persons',(req,res) => {
   const body = req.body
   if(!body.name){
@@ -77,9 +93,6 @@ app.post('/api/persons',(req,res) => {
   else if(!body.number){
     return res.status(400).json({error: 'number missing'})
   }
-  // else if(persons.find(p => p.name === body.name) !== undefined){
-  //   return res.status(400).json({error: 'name already exists'})
-  // }
   else{
     const person = new Phonebook({
       name: body.name,
