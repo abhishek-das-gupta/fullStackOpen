@@ -53,15 +53,12 @@ app.get('/info', (req,res) => {
   res.send(`<div> <p>Phonebook has info for ${persons.length}</p> <p> ${new Date()} </p></div>`)
 })
 
-app.get('/api/persons/:id',(req,res) => {
-  const id = Number(req.params.id)
-  const person = persons.find(p => p.id === id)
-  if(!person){
-    res.json(404).end()
-  }
-  else{
-    res.json(person)
-  }
+app.get('/api/persons/:id',(req,res,next) => {
+  Phonebook.findById(req.params.id)
+    .then(person =>{
+      res.json(person.toJSON())
+    })
+    .catch(error => next(error))
 })
 
 app.delete('/api/persons/:id', (req,res,next) => {
