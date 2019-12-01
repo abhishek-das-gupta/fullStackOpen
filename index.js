@@ -17,28 +17,6 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :b
 app.use(cors())
 app.use(express.static('build'))
 
-let persons = [
-    {
-        "name": "Arto Hellas",
-        "number": "040-123456",
-        "id": 1
-      },
-      {
-        "name": "Ada Lovelace",
-        "number": "39-44-5323523",
-        "id": 2
-      },
-      {
-        "name": "Mary Poppendieck",
-        "number": "39-23-6423122",
-        "id": 4
-      },
-      {
-        "name": "Beefy McWhatnow",
-        "number": "12345678",
-        "id": 75
-      }
-]
 app.get('/', (req,res) => {
   res.send(`<div><h1>Hello World!</h1></div>`)
 })
@@ -50,7 +28,10 @@ app.get('/api/persons', (req,res) => {
 })
 
 app.get('/info', (req,res) => {
-  res.send(`<div> <p>Phonebook has info for ${persons.length}</p> <p> ${new Date()} </p></div>`)
+  Phonebook.count({})
+    .then(result => {
+      res.send(`<div><p>Phonebook has info for ${result}</p> <p>${new Date()}</p></div>`)
+    })
 })
 
 app.get('/api/persons/:id',(req,res,next) => {
@@ -85,7 +66,7 @@ app.put('/api/persons/:id', (req,res,next) =>{
 })
 
 
-app.post('/api/persons',(req,res) => {
+app.post('/api/persons',(req,res,next) => {
   const body = req.body
   if(!body.name){
     return res.status(400).json({error: 'name missing'})
@@ -103,6 +84,7 @@ app.post('/api/persons',(req,res) => {
       .then(savedPerson => {
         res.json(savedPerson.toJSON())
       })
+      .catch(error => next(error))
   }
   
 })
