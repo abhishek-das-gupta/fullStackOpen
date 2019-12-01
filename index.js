@@ -78,17 +78,19 @@ app.post('/api/persons',(req,res) => {
   else if(!body.number){
     return res.status(400).json({error: 'number missing'})
   }
-  else if(persons.find(p => p.name === body.name) !== undefined){
-    return res.status(400).json({error: 'name already exists'})
-  }
+  // else if(persons.find(p => p.name === body.name) !== undefined){
+  //   return res.status(400).json({error: 'name already exists'})
+  // }
   else{
-    const person = {
+    const person = new Phonebook({
       name: body.name,
       number: body.number,
       id: Math.floor(Math.random()*100)
-    }
-    persons = persons.concat(person)
-    res.json(person)
+    })
+    person.save()
+      .then(savedPerson => {
+        res.json(savedPerson.toJSON())
+      })
   }
   
 })
