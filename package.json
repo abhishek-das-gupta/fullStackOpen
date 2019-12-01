@@ -10,6 +10,7 @@
     "push": "git push origin master",
     "build:ui": "rm -r build && cd /home/abhishek/FullStack/part2/thephonebook/ && npm run build --prod && cp -r build /home/abhishek/FullStack/part3/phonebookBackend",
     "deploy": "git push heroku master",
+    "setDB": "heroku config:set MONGODB_URI=mongodb+srv://ontheqt:pentekflora@cluster0-8xuqa.mongodb.net/phone-book-app?retryWrites=true&w=majority",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
